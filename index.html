@@ -27,14 +27,14 @@
 
   /* taped polaroid (shared figure styling so :hover can override) */
   .polaroid{position:relative;margin:0;width:100%;max-width:440px;background:#fbf7ec;
-    padding:14px 14px 36px;border:1px solid rgba(35,41,28,0.07);
+    padding:14px 14px 36px;border:1px solid rgba(35,41,28,0.07);border-radius:4px;
     box-shadow:0 16px 36px rgba(35,41,28,0.16),0 2px 6px rgba(35,41,28,0.10);
     transform:rotate(var(--rot,0deg));
     transition:transform 420ms cubic-bezier(.2,.7,.2,1),box-shadow 420ms ease}
   .polaroid:hover{transform:rotate(0deg) scale(1.015);box-shadow:0 24px 50px rgba(35,41,28,0.22)}
 
   /* screenshot slot — placeholder shows until work/*.png is dropped in */
-  .shot{position:relative;aspect-ratio:var(--ar,4 / 3);overflow:hidden;
+  .shot{position:relative;aspect-ratio:var(--ar,4 / 3);overflow:hidden;border-radius:3px;
     display:flex;align-items:center;justify-content:center;
     background:repeating-linear-gradient(135deg, rgba(35,41,28,0.05) 0 11px, rgba(35,41,28,0.09) 11px 22px), #e7ddc6}
   .shot::after{content:attr(data-label);padding:0 12px;text-align:center;
@@ -118,7 +118,7 @@
         <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
           <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
             <figure class="polaroid" style="--rot:-2.2deg">
-              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:112px;height:26px;transform:translateX(-50%) rotate(-2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <span aria-hidden="true" style="position:absolute;z-index:2;top:-11px;left:50%;width:112px;height:26px;transform:translateX(-50%) rotate(-2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
               <div class="shot" data-label="work/barter.png" style="--ar:1.37">
                 <img src="work/barter.png" alt="Barter LP interface — a USD-based pool builder with token selection and a live position breakdown" loading="lazy" onerror="this.remove()">
               </div>
@@ -150,7 +150,7 @@
           </div>
           <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
             <figure class="polaroid" style="--rot:1.9deg">
-              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:108px;height:26px;transform:translateX(-50%) rotate(3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <span aria-hidden="true" style="position:absolute;z-index:2;top:-11px;left:50%;width:108px;height:26px;transform:translateX(-50%) rotate(3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
               <div class="shot" data-label="twitter post &middot; work/wrapped.png" style="--ar:0.90">
                 <img src="work/wrapped.png" alt="Barter Wrapped 2025 tweet — a shareable on-chain year-in-review card, &lsquo;You&rsquo;re a Wrapped Capybara&rsquo;" loading="lazy" onerror="this.remove()">
               </div>
@@ -163,7 +163,7 @@
         <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
           <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
             <figure class="polaroid" style="--rot:-1.6deg">
-              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:104px;height:26px;transform:translateX(-50%) rotate(-2deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <span aria-hidden="true" style="position:absolute;z-index:2;top:-11px;left:50%;width:104px;height:26px;transform:translateX(-50%) rotate(-2deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
               <div class="shot" data-label="twitter post &middot; work/skilltree.png" style="--ar:1.65">
                 <img src="work/skilltree.png" alt="Skill Tree — an interactive DeFi skill tree of unlockable nodes radiating from a central crest" loading="lazy" onerror="this.remove()">
               </div>
@@ -195,7 +195,7 @@
           </div>
           <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
             <figure class="polaroid" style="--rot:2.3deg">
-              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:110px;height:26px;transform:translateX(-50%) rotate(2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <span aria-hidden="true" style="position:absolute;z-index:2;top:-11px;left:50%;width:110px;height:26px;transform:translateX(-50%) rotate(2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
               <div class="shot" data-label="work/walletmatch.png" style="--ar:1.36">
                 <img src="work/walletmatch.png" alt="Wallet Match — an audience analysis resolving Twitter handles to on-chain wallets ranked by USD balance" loading="lazy" onerror="this.remove()">
               </div>
@@ -208,7 +208,7 @@
         <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
           <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
             <figure class="polaroid" style="--rot:-2deg">
-              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:106px;height:26px;transform:translateX(-50%) rotate(-3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <span aria-hidden="true" style="position:absolute;z-index:2;top:-11px;left:50%;width:106px;height:26px;transform:translateX(-50%) rotate(-3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
               <div class="shot" data-label="twitter post &middot; work/lifi.png" style="--ar:0.78">
                 <img src="work/lifi.png" alt="The Li.Fi thread — a public teardown of what LI.FI Intents cannot do on Ethereum" loading="lazy" onerror="this.remove()">
               </div>
