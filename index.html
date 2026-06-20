@@ -33,13 +33,14 @@
     transition:transform 420ms cubic-bezier(.2,.7,.2,1),box-shadow 420ms ease}
   .polaroid:hover{transform:rotate(0deg) scale(1.015);box-shadow:0 24px 50px rgba(35,41,28,0.22)}
 
-  /* screenshot slot — placeholder shows until work/*.png is dropped in */
-  .shot{position:relative;aspect-ratio:var(--ar,4 / 3);overflow:hidden;border-radius:3px;
-    display:flex;align-items:center;justify-content:center;
+  /* screenshot slot — shows the image at its natural ratio (no crop);
+     the labeled placeholder only appears when work/*.png is absent */
+  .shot{position:relative;overflow:hidden;border-radius:3px;
     background:repeating-linear-gradient(135deg, rgba(35,41,28,0.05) 0 11px, rgba(35,41,28,0.09) 11px 22px), #e7ddc6}
-  .shot::after{content:attr(data-label);padding:0 12px;text-align:center;
+  .shot img{display:block;width:100%;height:auto}
+  .shot:not(:has(img)){aspect-ratio:var(--ar,4 / 3);display:flex;align-items:center;justify-content:center}
+  .shot:not(:has(img))::after{content:attr(data-label);padding:0 12px;text-align:center;
     color:#6c7560;font-family:'Spline Sans Mono',monospace;font-size:13px;line-height:1.5}
-  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#e7ddc6}
 
   @keyframes cloudDrift{from{transform:translateX(-4%)}to{transform:translateX(6%)}}
   @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
