@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timur Kirienko — Field Notes</title>
+<meta name="description" content="Field notes from the DeFi field. Timur Kirienko — product, design and growth. Based in Tbilisi, Georgia.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#f3eddd; --paper2:#ebe2cd; --ink:#23291c; --forest:#4a5d3c;
+    --earth:#9a7448; --sky-top:#c6d4cb; --sky-mid:#eee4c6; --sun:#f7e3a6; --accent:#c8ff2f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+  body{font-family:'Nunito',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  ::selection{background:var(--accent);color:#16210a}
+  a{color:inherit}
+
+  /* link hover (replaces DC style-hover) */
+  a.lnk{transition:color .28s ease, border-color .28s ease}
+  a.lnk:hover{color:var(--forest);border-bottom-color:var(--accent) !important}
+
+  /* taped polaroid (shared figure styling so :hover can override) */
+  .polaroid{position:relative;margin:0;width:100%;max-width:440px;background:#fbf7ec;
+    padding:14px 14px 36px;border:1px solid rgba(35,41,28,0.07);
+    box-shadow:0 16px 36px rgba(35,41,28,0.16),0 2px 6px rgba(35,41,28,0.10);
+    transform:rotate(var(--rot,0deg));
+    transition:transform 420ms cubic-bezier(.2,.7,.2,1),box-shadow 420ms ease}
+  .polaroid:hover{transform:rotate(0deg) scale(1.015);box-shadow:0 24px 50px rgba(35,41,28,0.22)}
+
+  /* screenshot slot — placeholder shows until work/*.png is dropped in */
+  .shot{position:relative;aspect-ratio:var(--ar,4 / 3);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    background:repeating-linear-gradient(135deg, rgba(35,41,28,0.05) 0 11px, rgba(35,41,28,0.09) 11px 22px), #e7ddc6}
+  .shot::after{content:attr(data-label);padding:0 12px;text-align:center;
+    color:#6c7560;font-family:'Spline Sans Mono',monospace;font-size:13px;line-height:1.5}
+  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#e7ddc6}
+
+  @keyframes cloudDrift{from{transform:translateX(-4%)}to{transform:translateX(6%)}}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+
+<div id="root" style="position:relative;width:100%;min-height:100vh;background:var(--paper)">
+
+  <!-- ====================== HERO ====================== -->
+  <header style="position:relative;width:100%;min-height:100svh;overflow:hidden;display:flex;flex-direction:column">
+
+    <!-- painted sky -->
+    <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(130% 90% at 80% 6%, var(--sun) 0%, rgba(247,227,166,0) 44%), linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--paper) 80%)"></div>
+    <!-- sun glow (scroll-shifted) -->
+    <div id="sun" aria-hidden="true" style="position:absolute;top:-12%;right:8%;width:46vmax;height:46vmax;border-radius:50%;background:radial-gradient(circle, rgba(255,246,206,0.85) 0%, rgba(255,240,180,0.35) 38%, rgba(255,240,180,0) 66%);pointer-events:none;will-change:transform"></div>
+    <!-- clouds -->
+    <div aria-hidden="true" style="position:absolute;top:14%;left:6%;width:34vmax;height:13vmax;background:radial-gradient(closest-side, rgba(255,255,250,0.9), rgba(255,255,250,0) 72%);filter:blur(6px);animation:cloudDrift 34s ease-in-out infinite alternate"></div>
+    <div aria-hidden="true" style="position:absolute;top:26%;right:14%;width:26vmax;height:10vmax;background:radial-gradient(closest-side, rgba(255,255,250,0.8), rgba(255,255,250,0) 72%);filter:blur(7px);animation:cloudDrift 46s ease-in-out infinite alternate-reverse"></div>
+    <!-- grass band -->
+    <div id="grass" aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:30vh;min-height:180px;background:linear-gradient(180deg, rgba(74,93,60,0) 0%, rgba(74,93,60,0) 50%, rgba(58,74,46,0.4) 100%);pointer-events:none;z-index:1"></div>
+    <!-- legibility scrim: lifts dark text off the busy grass/sky -->
+    <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:46vh;background:linear-gradient(180deg, rgba(243,237,221,0) 0%, rgba(243,237,221,0) 30%, rgba(243,237,221,0.72) 72%, var(--paper) 100%);pointer-events:none;z-index:2"></div>
+
+    <!-- top metadata bar -->
+    <div style="position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between;align-items:baseline;padding:clamp(18px,3vw,34px) clamp(20px,5vw,64px);width:100%;max-width:1180px;margin:0 auto;font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:0.1em;color:#34402a">
+      <span style="display:inline-flex;align-items:center;gap:9px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(200,255,47,0.22)"></span>field journal</span>
+      <span>41.7151&deg;N&nbsp;&nbsp;44.8271&deg;E</span>
+      <span>est. 2024</span>
+      <span>five specimens</span>
+      <span style="color:var(--forest)">last outdoor contact, 2026.06.20</span>
+    </div>
+
+    <!-- hero statement -->
+    <div style="position:relative;z-index:3;flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:clamp(22px,3.5vh,48px) clamp(20px,5vw,64px) 0;max-width:1180px;width:100%;margin:0 auto">
+      <div style="font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.12em;color:var(--forest);margin-bottom:clamp(16px,2.4vw,26px)">field note 000&nbsp;&nbsp;&nbsp;&nbsp;touch_the_grass</div>
+      <h1 style="margin:0;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(2.5rem,6.4vw,5.6rem);line-height:1.05;letter-spacing:-0.012em;color:var(--ink);max-width:26ch">Two years in the DeFi <span style="position:relative;white-space:nowrap">field<span style="position:absolute;left:0;right:0;bottom:0.08em;height:0.1em;background:var(--accent);z-index:-1"></span></span>. Sometimes I log off and touch <em style="font-style:italic">the real one.</em></h1>
+      <p style="margin:clamp(18px,2.6vw,28px) 0 0;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.02em;color:#2c3520;max-width:52rem;line-height:1.75">* the handle is <span style="color:var(--ink);font-weight:500">touch_the_grass</span>. yes, it's a reminder. this page is what the field looks like from the inside.</p>
+    </div>
+
+    <!-- bottom identity strip -->
+    <div style="position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:14px clamp(22px,4vw,52px);align-items:flex-end;justify-content:space-between;padding:clamp(20px,3vw,40px) clamp(20px,5vw,64px) clamp(28px,4vw,48px);width:100%;max-width:1180px;margin:0 auto">
+      <div>
+        <div style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1;color:var(--ink)">Timur Kirienko</div>
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:0.05em;color:#2f3a24;margin-top:8px">product, design, growth. based in tbilisi, georgia.</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px 18px;font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:0.03em;color:var(--ink)">
+        <a class="lnk" href="https://t.me/touch_the_grass" target="_blank" rel="noopener" style="text-decoration:none;border-bottom:1px solid rgba(35,41,28,0.4);padding-bottom:1px">@touch_the_grass&nbsp;&#8599;</a>
+        <a class="lnk" href="https://x.com/grass_the_touch" target="_blank" rel="noopener" style="text-decoration:none;border-bottom:1px solid rgba(35,41,28,0.4);padding-bottom:1px">@grass_the_touch&nbsp;&#8599;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================== OPENING ====================== -->
+  <section style="position:relative;z-index:2;background:var(--paper);padding:clamp(64px,11vw,150px) clamp(20px,5vw,64px) clamp(56px,9vw,120px)">
+    <div style="max-width:1180px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:16px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.1em;color:var(--forest);margin-bottom:clamp(28px,4vw,46px)">
+        <span>field note 001</span><span style="flex:1;height:1px;background:rgba(35,41,28,0.16)"></span><span>observations</span>
+      </div>
+      <p style="margin:0;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.5rem,3.4vw,2.7rem);line-height:1.3;letter-spacing:-0.005em;color:var(--ink);max-width:46ch;text-wrap:balance">DeFi growth manager working where product, design and distribution overlap.</p>
+      <p style="margin:clamp(26px,3.4vw,40px) 0 0;font-size:clamp(1.02rem,1.5vw,1.22rem);line-height:1.72;color:#3c4533;max-width:58rem;font-weight:300;text-wrap:pretty">Two years leading product at Barter, an Ethereum router and self-custody LP protocol. Active user across lending, LP, swaps, bridging, yield and perps.</p>
+    </div>
+  </section>
+
+  <!-- ====================== SELECTED WORK ====================== -->
+  <section style="position:relative;z-index:2;background:linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);padding:clamp(48px,7vw,90px) clamp(20px,5vw,64px) clamp(80px,11vw,150px)">
+    <div style="max-width:1180px;margin:0 auto">
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.1em;color:var(--forest);margin-bottom:clamp(20px,3vw,30px)">
+        <span>field note 002</span><span style="flex:1;min-width:40px;height:1px;background:rgba(35,41,28,0.16)"></span><span>five specimens</span>
+      </div>
+      <h2 style="margin:0 0 clamp(46px,7vw,84px);font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;letter-spacing:-0.01em;max-width:none">Field work</h2>
+
+      <div style="display:flex;flex-direction:column;gap:clamp(56px,8vw,110px)">
+
+        <!-- SPECIMEN 01 -->
+        <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
+          <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
+            <figure class="polaroid" style="--rot:-2.2deg">
+              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:112px;height:26px;transform:translateX(-50%) rotate(-2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <div class="shot" data-label="work/barter.png" style="--ar:1.37">
+                <img src="work/barter.png" alt="Barter LP interface — a USD-based pool builder with token selection and a live position breakdown" loading="lazy" onerror="this.remove()">
+              </div>
+              <figcaption style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-style:italic;font-size:1.12rem;color:#3c4533;text-align:center;margin-top:13px">barter, the liquidity flow</figcaption>
+            </figure>
+          </div>
+          <div style="flex:1 1 360px;min-width:min(100%,320px)">
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--forest);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center">
+              <span style="color:var(--ink);font-weight:500">specimen 01</span><span>mainnet</span><span>oct 2024 &ndash; may 2026</span><span style="display:inline-flex;align-items:center;gap:6px;color:#4d6a2c"><span style="width:6px;height:6px;border-radius:50%;background:#6f9a32"></span>live</span>
+            </div>
+            <h3 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.02">Barter Autopilot</h3>
+            <div style="font-size:1.04rem;color:#4a5340">Ethereum-native router and self-custody LP protocol</div>
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.05em;color:#6c7560;margin-top:6px">product lead and designer</div>
+            <p style="margin:16px 0 0;font-size:1.02rem;line-height:1.68;color:#3c4533;font-weight:300;max-width:48ch;text-wrap:pretty">Owned the product surface end to end: LP flow, stats, points, virality, a lottery-format incentive, a "while you were away" re-engagement screen. Found the drop-off in the LP flow, cut the steps and simplified UX.</p>
+            <a class="lnk" href="https://app.barterswap.xyz/liquidity" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.06em;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:3px">app.barterswap.xyz/liquidity&nbsp;&#8599;</a>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 02 -->
+        <article data-magnetic style="display:flex;flex-wrap:wrap-reverse;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
+          <div style="flex:1 1 360px;min-width:min(100%,320px)">
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--forest);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center">
+              <span style="color:var(--ink);font-weight:500">specimen 02</span><span>twitter</span><span>2025</span><span style="display:inline-flex;align-items:center;gap:6px;color:#8a6a1f"><span style="width:6px;height:6px;border-radius:50%;background:#c79a2c"></span>viral experiment</span>
+            </div>
+            <h3 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.02">Barter Wrapped 2025</h3>
+            <div style="font-size:1.04rem;color:#4a5340">Viral on-chain year-in-review</div>
+            <p style="margin:16px 0 0;font-size:1.02rem;line-height:1.68;color:#3c4533;font-weight:300;max-width:48ch;text-wrap:pretty">A year swap review for any wallet. Built to test what the crypto crowd actually shares.</p>
+            <a class="lnk" href="https://wrapped.barterswap.xyz/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.06em;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:3px">wrapped.barterswap.xyz&nbsp;&#8599;</a>
+          </div>
+          <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
+            <figure class="polaroid" style="--rot:1.9deg">
+              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:108px;height:26px;transform:translateX(-50%) rotate(3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <div class="shot" data-label="twitter post &middot; work/wrapped.png" style="--ar:0.90">
+                <img src="work/wrapped.png" alt="Barter Wrapped 2025 tweet — a shareable on-chain year-in-review card, &lsquo;You&rsquo;re a Wrapped Capybara&rsquo;" loading="lazy" onerror="this.remove()">
+              </div>
+              <figcaption style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-style:italic;font-size:1.12rem;color:#3c4533;text-align:center;margin-top:13px">wrapped, the viral test</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 03 -->
+        <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
+          <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
+            <figure class="polaroid" style="--rot:-1.6deg">
+              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:104px;height:26px;transform:translateX(-50%) rotate(-2deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <div class="shot" data-label="twitter post &middot; work/skilltree.png" style="--ar:1.65">
+                <img src="work/skilltree.png" alt="Skill Tree — an interactive DeFi skill tree of unlockable nodes radiating from a central crest" loading="lazy" onerror="this.remove()">
+              </div>
+              <figcaption style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-style:italic;font-size:1.12rem;color:#3c4533;text-align:center;margin-top:13px">skill tree, nodes and unlocks</figcaption>
+            </figure>
+          </div>
+          <div style="flex:1 1 360px;min-width:min(100%,320px)">
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--forest);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center">
+              <span style="color:var(--ink);font-weight:500">specimen 03</span><span>side path</span><span style="display:inline-flex;align-items:center;gap:6px;color:#4d6a2c"><span style="width:6px;height:6px;border-radius:50%;background:#6f9a32"></span>experiment</span>
+            </div>
+            <h3 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.02">Skill Tree</h3>
+            <div style="font-size:1.04rem;color:#4a5340">Gamified DeFi skill tree</div>
+            <p style="margin:16px 0 0;font-size:1.02rem;line-height:1.68;color:#3c4533;font-weight:300;max-width:48ch;text-wrap:pretty">An interactive tree that maps on-chain DeFi activity into unlockable nodes. A side experiment in virality that doesn't lean on rebates.</p>
+            <a class="lnk" href="https://skills.barterswap.xyz/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.06em;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:3px">skills.barterswap.xyz&nbsp;&#8599;</a>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 04 -->
+        <article data-magnetic style="display:flex;flex-wrap:wrap-reverse;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
+          <div style="flex:1 1 360px;min-width:min(100%,320px)">
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--forest);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center">
+              <span style="color:var(--ink);font-weight:500">specimen 04</span><span>solo expedition</span><span style="display:inline-flex;align-items:center;gap:6px;color:#4d6a2c"><span style="width:6px;height:6px;border-radius:50%;background:#6f9a32"></span>live saas</span>
+            </div>
+            <h3 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.02">Wallet Match</h3>
+            <div style="font-size:1.04rem;color:#4a5340">Twitter-to-wallet resolver</div>
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.05em;color:#6c7560;margin-top:6px">solo build, end to end</div>
+            <p style="margin:16px 0 0;font-size:1.02rem;line-height:1.68;color:#3c4533;font-weight:300;max-width:48ch;text-wrap:pretty">Resolves Twitter handles to on-chain wallets ranked by USD balance, and the reverse direction too. Taken all the way into a live SaaS.</p>
+            <a class="lnk" href="https://wallet-match.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.06em;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:3px">wallet-match.com&nbsp;&#8599;</a>
+          </div>
+          <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
+            <figure class="polaroid" style="--rot:2.3deg">
+              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:110px;height:26px;transform:translateX(-50%) rotate(2.5deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <div class="shot" data-label="work/walletmatch.png" style="--ar:1.36">
+                <img src="work/walletmatch.png" alt="Wallet Match — an audience analysis resolving Twitter handles to on-chain wallets ranked by USD balance" loading="lazy" onerror="this.remove()">
+              </div>
+              <figcaption style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-style:italic;font-size:1.12rem;color:#3c4533;text-align:center;margin-top:13px">wallet match, solo build</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 05 — Li.Fi thread -->
+        <article data-magnetic style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1),filter 380ms ease;will-change:transform">
+          <div style="flex:1 1 360px;min-width:min(100%,340px);display:flex;justify-content:center">
+            <figure class="polaroid" style="--rot:-2deg">
+              <span aria-hidden="true" style="position:absolute;top:-11px;left:50%;width:106px;height:26px;transform:translateX(-50%) rotate(-3deg);background:rgba(200,255,47,0.32);border:1px solid rgba(120,150,40,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.06)"></span>
+              <div class="shot" data-label="twitter post &middot; work/lifi.png" style="--ar:0.78">
+                <img src="work/lifi.png" alt="The Li.Fi thread — a public teardown of what LI.FI Intents cannot do on Ethereum" loading="lazy" onerror="this.remove()">
+              </div>
+              <figcaption style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-style:italic;font-size:1.12rem;color:#3c4533;text-align:center;margin-top:13px">the li.fi thread</figcaption>
+            </figure>
+          </div>
+          <div style="flex:1 1 360px;min-width:min(100%,320px)">
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--forest);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center">
+              <span style="color:var(--ink);font-weight:500">specimen 05</span><span>field observation</span><span>2026</span><span style="display:inline-flex;align-items:center;gap:6px;color:#4d6a2c"><span style="width:6px;height:6px;border-radius:50%;background:#6f9a32"></span>public thread</span>
+            </div>
+            <h3 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.02">Reading Li.Fi in public</h3>
+            <div style="font-size:1.04rem;color:#4a5340">An intent-execution teardown</div>
+            <p style="margin:16px 0 0;font-size:1.02rem;line-height:1.68;color:#3c4533;font-weight:300;max-width:48ch;text-wrap:pretty">A public teardown of Li.Fi's intent execution.</p>
+            <a class="lnk" href="https://x.com/grass_the_touch" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.06em;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:3px">read the thread&nbsp;&#8599;</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== TRAJECTORY ====================== -->
+  <section style="position:relative;z-index:2;background:var(--ink);color:var(--paper);padding:clamp(64px,10vw,130px) clamp(20px,5vw,64px)">
+    <div style="max-width:1180px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:16px;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#9fb085;margin-bottom:clamp(34px,5vw,56px)">
+        <span>field note 003</span><span style="flex:1;height:1px;background:rgba(243,237,221,0.18)"></span><span>terrain crossed</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline;padding:clamp(16px,2.4vw,24px) 0;border-top:1px solid rgba(243,237,221,0.16)">
+          <span style="font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9fb085;min-width:160px">2024 &ndash; 2026</span>
+          <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.3rem,2.6vw,1.9rem);flex:1">Barter, product lead &amp; designer</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline;padding:clamp(16px,2.4vw,24px) 0;border-top:1px solid rgba(243,237,221,0.16)">
+          <span style="font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9fb085;min-width:160px">2024 &ndash; 2025</span>
+          <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.3rem,2.6vw,1.9rem);flex:1">Freelance decks for Web3 projects</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline;padding:clamp(16px,2.4vw,24px) 0;border-top:1px solid rgba(243,237,221,0.16);border-bottom:1px solid rgba(243,237,221,0.16)">
+          <span style="font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9fb085;min-width:160px">earlier</span>
+          <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(1.3rem,2.6vw,1.9rem);flex:1">Strategy-case championships, <span style="color:var(--accent)">13 entered and podium in 6</span></span>
+        </div>
+      </div>
+      <p style="margin:clamp(26px,3.4vw,40px) 0 0;font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9fb085;max-width:60ch;line-height:1.75">based in tbilisi. learns by shipping. still online more than outside, which is the whole joke.</p>
+    </div>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer style="position:relative;z-index:2;overflow:hidden;background:linear-gradient(180deg, var(--paper) 0%, #e7dcc4 100%);padding:clamp(64px,10vw,130px) clamp(20px,5vw,64px) clamp(40px,6vw,64px)">
+    <div style="max-width:1180px;margin:0 auto;position:relative;z-index:2">
+      <div style="font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:0.1em;color:var(--forest);margin-bottom:clamp(20px,3vw,30px)">coordinates</div>
+      <h2 style="margin:0 0 clamp(36px,5vw,56px);font-family:'Zen Maru Gothic',sans-serif;font-weight:500;font-size:clamp(2rem,5.4vw,4rem);line-height:1.02;letter-spacing:-0.01em;max-width:none">Send a signal across the field.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:12px 22px;font-family:'Spline Sans Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink)">
+        <a class="lnk" href="https://t.me/touch_the_grass" target="_blank" rel="noopener" style="text-decoration:none;border-bottom:1px solid rgba(35,41,28,0.32);padding-bottom:2px">telegram, @touch_the_grass&nbsp;&#8599;</a>
+        <a class="lnk" href="https://x.com/grass_the_touch" target="_blank" rel="noopener" style="text-decoration:none;border-bottom:1px solid rgba(35,41,28,0.32);padding-bottom:2px">x, @grass_the_touch&nbsp;&#8599;</a>
+        <a class="lnk" href="https://github.com/cakewinner" target="_blank" rel="noopener" style="text-decoration:none;border-bottom:1px solid rgba(35,41,28,0.32);padding-bottom:2px">github, cakewinner&nbsp;&#8599;</a>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:14px 24px;justify-content:space-between;align-items:flex-end;margin-top:clamp(64px,10vw,120px);padding-top:22px;border-top:1px solid rgba(35,41,28,0.16);font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#4a5340">
+        <span>field journal, timur kirienko, v2026.06.20</span>
+        <span>checksum&nbsp;&nbsp;<span style="color:var(--forest)">touch_the_grass</span></span>
+        <span style="flex-basis:100%;color:#5a6347;font-size:12px">Filed from a field in Tbilisi. The grass was real this time.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- drifting seeds layer -->
+  <div id="seeds" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden"></div>
+  <!-- companion seed -->
+  <div id="companion" aria-hidden="true" style="position:fixed;left:0;top:0;width:26px;height:26px;pointer-events:none;z-index:41;opacity:0;transition:opacity 600ms ease;will-change:transform"></div>
+  <!-- grain overlay -->
+  <div id="grain" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:60;mix-blend-mode:multiply;opacity:0.05"></div>
+
+</div>
+
+<script>
+/* Field Notes — cursor-driven Ghibli motion (no libraries).
+   Ported from the design prototype; respects prefers-reduced-motion. */
+(function () {
+  var ACCENT = '#c8ff2f';
+
+  function FieldNotes() {
+    this.rootEl = document.getElementById('root');
+    this.grassEl = document.getElementById('grass');
+    this.sunEl = document.getElementById('sun');
+    this.seedsEl = document.getElementById('seeds');
+    this.compEl = document.getElementById('companion');
+    this.grainEl = document.getElementById('grain');
+  }
+
+  FieldNotes.prototype.start = function () {
+    if (this.grainEl) {
+      this.grainEl.style.backgroundImage = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E\")";
+    }
+
+    this.reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    this.buildGrass();
+    if (this.reduce) return;
+
+    this.buildSeeds();
+    this.buildCompanion();
+
+    this.mx = -9999; this.my = -9999;
+    this.cx = window.innerWidth / 2; this.cy = window.innerHeight / 2;
+    this.haveCursor = false;
+    this.scrollY = window.scrollY || window.pageYOffset || 0;
+
+    var self = this;
+    this.onMove = function (e) { self.mx = e.clientX; self.my = e.clientY; self.haveCursor = true; };
+    this.onScroll = function () { self.scrollY = window.scrollY || window.pageYOffset; };
+    this.onResize = function () { clearTimeout(self._rt); self._rt = setTimeout(function () { self.buildGrass(); }, 200); };
+    window.addEventListener('mousemove', this.onMove, { passive: true });
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize, { passive: true });
+
+    this.cards = Array.prototype.slice.call(this.rootEl.querySelectorAll('[data-magnetic]'));
+    this.cards.forEach(function (c) {
+      c.addEventListener('mousemove', function (e) {
+        var b = c.getBoundingClientRect();
+        var dx = (e.clientX - (b.left + b.width / 2)) / b.width;
+        var dy = (e.clientY - (b.top + b.height / 2)) / b.height;
+        c.style.transform = 'translate(' + (dx * 8) + 'px, ' + (dy * 6) + 'px) rotate(' + (dx * 1.0) + 'deg)';
+        c.style.filter = 'brightness(1.035)';
+      });
+      c.addEventListener('mouseleave', function () {
+        c.style.transform = 'translate(0,0) rotate(0deg)';
+        c.style.filter = 'none';
+      });
+    });
+
+    this.t = 0;
+    this.loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this.loop);
+  };
+
+  FieldNotes.prototype.buildGrass = function () {
+    var host = this.grassEl; if (!host) return;
+    var olds = host.querySelectorAll('svg');
+    for (var k = 0; k < olds.length; k++) olds[k].remove();
+    var W = host.clientWidth || window.innerWidth;
+    var H = host.clientHeight || 220;
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.style.cssText = 'position:absolute;left:0;bottom:0;width:100%;height:100%;overflow:visible';
+    var greens = ['#3c5132', '#46613a', '#557046', '#34492b', '#5f7a4c'];
+    this.blades = [];
+    var step = Math.max(10, Math.round(W / 108));
+    var count = Math.floor(W / step) + 2;
+    for (var i = 0; i < count; i++) {
+      var x = i * step + (Math.random() * step * 0.6 - step * 0.3);
+      var layer = Math.random();
+      var h = (layer < 0.4 ? 70 : 110) + Math.random() * (layer < 0.4 ? 60 : 110);
+      var lean0 = (Math.random() * 14 - 7);
+      var tip = (Math.random() < 0.06);
+      var g = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      var cx = x + lean0;
+      var d = 'M ' + (x - 3.4) + ' ' + H + ' Q ' + (x + lean0 * 0.5) + ' ' + (H - h * 0.55) + ' ' + cx + ' ' + (H - h) + ' Q ' + (x + lean0 * 0.5) + ' ' + (H - h * 0.55) + ' ' + (x + 3.4) + ' ' + H + ' Z';
+      g.setAttribute('d', d);
+      g.setAttribute('fill', tip ? ACCENT : greens[(Math.random() * greens.length) | 0]);
+      g.setAttribute('opacity', layer < 0.4 ? 0.55 : 0.92);
+      g.style.transformBox = 'fill-box';
+      g.style.transformOrigin = 'bottom center';
+      svg.appendChild(g);
+      this.blades.push({ el: g, x: x, h: h, lean0: lean0, phase: Math.random() * 6.28, cur: lean0 });
+    }
+    host.appendChild(svg);
+    this.grassH = H;
+    this.grassDocTop = host.getBoundingClientRect().top + (window.scrollY || 0);
+  };
+
+  FieldNotes.prototype.buildSeeds = function () {
+    var host = this.seedsEl; if (!host) return;
+    this.seeds = [];
+    var N = 6;
+    for (var i = 0; i < N; i++) {
+      var d = document.createElement('div');
+      d.style.cssText = 'position:absolute;will-change:transform;opacity:0.55';
+      d.innerHTML = this.seedSVG(10 + Math.random() * 7, 'rgba(60,72,46,0.55)');
+      host.appendChild(d);
+      this.seeds.push({
+        el: d,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: -0.18 - Math.random() * 0.22,
+        vy: -0.10 - Math.random() * 0.18,
+        rot: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 0.5
+      });
+    }
+  };
+
+  FieldNotes.prototype.buildCompanion = function () {
+    var host = this.compEl; if (!host) return;
+    host.innerHTML = this.seedSVG(22, 'rgba(40,52,30,0.78)');
+    host.style.opacity = '0.9';
+  };
+
+  FieldNotes.prototype.seedSVG = function (s, color) {
+    var c = s / 2;
+    var spokes = '';
+    for (var a = 0; a < 9; a++) {
+      var ang = (a / 9) * Math.PI * 2;
+      spokes += "<line x1='" + c + "' y1='" + c + "' x2='" + (c + Math.cos(ang) * c) + "' y2='" + (c + Math.sin(ang) * c) + "' stroke='" + color + "' stroke-width='0.8'/>";
+    }
+    return "<svg width='" + s + "' height='" + (s * 1.7) + "' viewBox='0 0 " + s + " " + (s * 1.7) + "' style='overflow:visible'>" + spokes + "<circle cx='" + c + "' cy='" + c + "' r='1.6' fill='" + color + "'/><path d='M " + c + " " + c + " q 1.5 " + s + " 0 " + s + "' stroke='" + color + "' stroke-width='0.8' fill='none'/></svg>";
+  };
+
+  FieldNotes.prototype.loop = function () {
+    this.t += 0.016;
+    var t = this.t;
+
+    var sy = this.scrollY || 0;
+    var heroVisible = sy < (this.grassDocTop || 0) + (this.grassH || 240) + 140;
+    if (this.blades && this.grassEl && heroVisible) {
+      var topNow = (this.grassDocTop || 0) - sy;
+      var botNow = topNow + (this.grassH || 240);
+      var curX = this.haveCursor ? this.mx : -9999;
+      var inBand = this.haveCursor && this.my > topNow - 120 && this.my < botNow + 60;
+      for (var i = 0; i < this.blades.length; i++) {
+        var bl = this.blades[i];
+        var idle = Math.sin(t * 0.9 + bl.phase) * 3.2;
+        var lean = bl.lean0 + idle;
+        if (inBand) {
+          var dist = curX - bl.x;
+          var ad = Math.abs(dist);
+          if (ad < 240) {
+            var f = (1 - ad / 240);
+            lean += -Math.sign(dist) * f * f * 30;
+          }
+        }
+        bl.cur += (lean - bl.cur) * 0.16;
+        bl.el.style.transform = 'rotate(' + bl.cur + 'deg)';
+      }
+    }
+
+    if (this.seeds) {
+      var W = window.innerWidth, H = window.innerHeight;
+      for (var j = 0; j < this.seeds.length; j++) {
+        var s = this.seeds[j];
+        var nx = 0, ny = 0;
+        if (this.haveCursor) {
+          var dx = s.x - this.mx, dy = s.y - this.my;
+          var dd = dx * dx + dy * dy;
+          if (dd < 26000) { var inv = 1 / Math.max(40, Math.sqrt(dd)); nx = dx * inv * 0.9; ny = dy * inv * 0.9; }
+        }
+        s.x += s.vx + nx + Math.sin(t * 0.6 + s.y * 0.01) * 0.15;
+        s.y += s.vy + ny;
+        s.rot += s.vr;
+        if (s.x < -30) { s.x = W + 20; s.y = Math.random() * H; }
+        if (s.y < -40) { s.y = H + 20; s.x = Math.random() * W; }
+        s.el.style.transform = 'translate(' + s.x + 'px, ' + s.y + 'px) rotate(' + s.rot + 'deg)';
+      }
+    }
+
+    if (this.compEl && this.haveCursor) {
+      var tx = this.mx + 46, ty = this.my + 30;
+      this.cx += (tx - this.cx) * 0.022;
+      this.cy += (ty - this.cy) * 0.022;
+      var bob = Math.sin(t * 1.4) * 5;
+      var drift = Math.cos(t * 0.7) * 7;
+      this.compEl.style.opacity = '0.9';
+      this.compEl.style.transform = 'translate(' + (this.cx + drift) + 'px, ' + (this.cy + bob) + 'px) rotate(' + (Math.sin(t) * 12) + 'deg)';
+    }
+
+    if (this.sunEl && heroVisible) {
+      this.sunEl.style.transform = 'translate(' + (-sy * 0.06) + 'px, ' + (sy * 0.12) + 'px)';
+    }
+
+    this.raf = requestAnimationFrame(this.loop);
+  };
+
+  function go() { new FieldNotes().start(); }
+  if (document.readyState !== 'loading') go();
+  else document.addEventListener('DOMContentLoaded', go);
+})();
+</script>
+</body>
+</html>
